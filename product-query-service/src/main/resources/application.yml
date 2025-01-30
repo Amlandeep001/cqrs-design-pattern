@@ -9,3 +9,7 @@ spring:
           json:
             trusted:
               packages: com.org.cqrs.dto
+      group-id: product-event-group
+product:
+  event:
+    topic-name: product-event-topic

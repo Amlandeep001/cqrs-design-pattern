@@ -28,7 +28,7 @@ public class ProductQueryService
 		return repository.findAll();
 	}
 
-	@KafkaListener(topics = "product-event-topic", groupId = "product-event-group")
+	@KafkaListener(topics = "${product.event.topic-name}", groupId = "${spring.kafka.consumer.group-id}")
 	public void processProductEvents(ProductEvent productEvent)
 	{
 		Product product = productEvent.getProduct();
