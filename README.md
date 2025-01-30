@@ -3,7 +3,7 @@
 ### CreateProduct Event
 
 ```
-curl --location 'http://localhost:9191/products' \
+curl --location 'http://localhost:9691/products' \
 --header 'Content-Type: application/json' \
 --data '{
     "type": "CreateProduct",
@@ -17,7 +17,7 @@ curl --location 'http://localhost:9191/products' \
 ### UpdateProduct Event
 
 ```
-curl --location --request PUT 'http://localhost:9191/products/1' \
+curl --location --request PUT 'http://localhost:9691/products/1' \
 --header 'Content-Type: application/json' \
 --data '{
     "type": "UpdateProduct",
