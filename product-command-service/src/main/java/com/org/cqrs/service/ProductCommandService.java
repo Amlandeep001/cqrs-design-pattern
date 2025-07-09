@@ -1,5 +1,6 @@
 package com.org.cqrs.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,14 @@ public class ProductCommandService
 {
 	private ProductRepository repository;
 	private KafkaTemplate<String, Object> kafkaTemplate;
+	private final String productEventTopic;
 
-	public ProductCommandService(ProductRepository repository, KafkaTemplate<String, Object> kafkaTemplate)
+	public ProductCommandService(ProductRepository repository, KafkaTemplate<String, Object> kafkaTemplate,
+			@Value("${product.event.topic-name}") String productEventTopic)
 	{
 		this.repository = repository;
 		this.kafkaTemplate = kafkaTemplate;
+		this.productEventTopic = productEventTopic;
 	}
 
 	public Product createProduct(ProductEvent productEvent)
@@ -25,7 +29,7 @@ public class ProductCommandService
 		Product productDO = repository.save(productEvent.getProduct());
 		ProductEvent event = new ProductEvent(EventType.CreateProduct, productDO);
 
-		kafkaTemplate.send("product-event-topic", event);
+		kafkaTemplate.send(productEventTopic, event);
 
 		return productDO;
 	}
